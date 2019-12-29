@@ -282,13 +282,13 @@ namespace SimpleCSharpCompiler.Core
                         {
                             var fi = new FileInfo(Assembly.GetAssembly(this.GetType()).Location);
                             var di = fi.Directory;
-                            var runtimeConfig = new FileInfo(Path.Combine(di.FullName, "SimpleCSharpCompiler.runtimeconfig.json"));
+                            var runtimeConfig = new FileInfo(Path.Combine(di.FullName, "scsc.runtimeconfig.json"));
                             runtimeConfig.CopyTo(Path.Combine(TargetDir.FullName, new FileInfo(TargetFile).Name.Remove(new FileInfo(TargetFile).Name.Length - 4) + ".runtimeconfig.json"), true);
                         }
                         {
                             var fi = new FileInfo(Assembly.GetAssembly(this.GetType()).Location);
                             var di = fi.Directory;
-                            var runtimeConfig = new FileInfo(Path.Combine(di.FullName, "SimpleCSharpCompiler.runtimeconfig.json"));
+                            var runtimeConfig = new FileInfo(Path.Combine(di.FullName, "scsc.runtimeconfig.json"));
                             runtimeConfig.CopyTo(Path.Combine(TargetDir.FullName, "SimpleCSharpCompiler.Host.runtimeconfig.json"), true);
                         }
                         {
