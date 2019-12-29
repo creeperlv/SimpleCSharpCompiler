@@ -301,16 +301,26 @@ namespace SimpleCSharpCompiler.Core
                         {
                             var fi = new FileInfo(Assembly.GetAssembly(this.GetType()).Location);
                             var di = fi.Directory;
-                            var runtimeConfig = new FileInfo(Path.Combine(di.FullName, "SimpleCSharpCompiler.Host.exe"));
-                            runtimeConfig.CopyTo(TargetFile, true);
+                            if(Platform== Platform.X64)
+                            {
+
+                                var HostFile = new FileInfo(Path.Combine(di.FullName, "PreBuilt", "Host.Win32.x64.exe"));
+                                HostFile.CopyTo(TargetFile, true);
+                            }
+                            if(Platform== Platform.X64)
+                            {
+
+                                var HostFile = new FileInfo(Path.Combine(di.FullName, "PreBuilt", "Host.Win32.x86.exe"));
+                                HostFile.CopyTo(TargetFile, true);
+                            }
                         }
                         else
                         if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                         {
                             var fi = new FileInfo(Assembly.GetAssembly(this.GetType()).Location);
                             var di = fi.Directory;
-                            var runtimeConfig = new FileInfo(Path.Combine(di.FullName, "SimpleCSharpCompiler.Host"));
-                            runtimeConfig.CopyTo(TargetFile, true);
+                            var HostFile = new FileInfo(Path.Combine(di.FullName, "PreBuilt", "Host.Linux64"));
+                            HostFile.CopyTo(TargetFile, true);
                         }
                         {
                             File.WriteAllText(Path.Combine(TargetDir.FullName, "Runtime.Config"), new FileInfo(realFile).Name);
