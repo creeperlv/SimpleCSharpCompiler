@@ -3,7 +3,7 @@
 using namespace std;
 int main(int argc,char *argv[])
 {
-    FILE* config = fopen("Runtime.Config","R+");
+    FILE* config = fopen("Runtime.Config","r+");
     
     char* dllFile=new char[256];
     fgets(dllFile,255,config);
