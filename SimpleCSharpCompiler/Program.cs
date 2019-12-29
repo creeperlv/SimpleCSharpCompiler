@@ -8,13 +8,27 @@ namespace SimpleCSharpCompiler
 {
     class Program
     {
-        static readonly Version version = new Version(1, 0, 0, 0);
+        static readonly Version version = new Version(1, 0, 1, 0);
+
+        static CoreCompiler coreCompiler;
+        public static void SearchSourceCode(DirectoryInfo rootDir,ref int count)
+        {
+            foreach (var item in rootDir.EnumerateFiles("*.cs"))
+            {
+                coreCompiler.AddCodeFile(item.FullName);
+                count++;
+            }
+            foreach (var item in rootDir.EnumerateDirectories())
+            {
+                SearchSourceCode(item, ref count);
+            }
+        }
         static void Main(string[] args)
         {
             //Console.WriteLine("Simple C# Compiler, scsc");
 
             Language.Load();
-            CoreCompiler coreCompiler = new CoreCompiler();
+            coreCompiler = new CoreCompiler();
             int count = 0;
             bool ShowVersion = false;
             for (int i = 0; i < args.Length; i++)
@@ -30,6 +44,24 @@ namespace SimpleCSharpCompiler
                             if (!file.Directory.Exists) file.Directory.Create();
                             coreCompiler.SetTargetName(file.Name);
                             coreCompiler.SetTargetFile(file.FullName);
+                        }
+                        break;
+                    case "-F":
+                        {
+                            //Specify Folder
+                            string f = args[i + 1];
+                            i++;
+                            var dir= new DirectoryInfo(f);
+                            foreach (var item in dir.EnumerateFiles("*.cs"))
+                            {
+                                coreCompiler.AddCodeFile(item.FullName);
+                                count++;
+                            }
+                            foreach (var item in dir.EnumerateDirectories())
+                            {
+                                if (item.Name.ToUpper().Equals("BIN") || item.Name.ToUpper().Equals("OBJ")) continue;
+                                SearchSourceCode(item,ref count);
+                            }
                         }
                         break;
                     case "-OPT":

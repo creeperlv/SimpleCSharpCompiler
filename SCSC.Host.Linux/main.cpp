@@ -16,7 +16,7 @@ int main(int argc,char *argv[])
         {
             cmdLine += "\"";
             cmdLine += argv[i];
-            cmdLine += "\"";
+            cmdLine += "\" ";
         }
     }
     system(cmdLine.c_str());
