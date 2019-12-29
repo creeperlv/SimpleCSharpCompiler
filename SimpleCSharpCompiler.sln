@@ -13,6 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleCSharpCompiler.Global
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SCSC.Host.Linux", "SCSC.Host.Linux\SCSC.Host.Linux.vcxproj", "{611D4F4C-8BCC-4D92-8F3E-41A3FC929523}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A6EFF36F-364B-4F68-8D6D-1F071B453579}"
+	ProjectSection(SolutionItems) = preProject
+		Install.Linux.sh = Install.Linux.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
