@@ -5,3 +5,4 @@ Com.Ter=compilation terminated.
 ResSrcFile=Resolving Source File...
 Unknown.Platform=Unknown Platform.
 Unknown.LanguageVersion=Unknown Language Version.
+File.NotExist=The file "{0}" is not exist.

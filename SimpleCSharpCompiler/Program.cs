@@ -172,8 +172,15 @@ namespace SimpleCSharpCompiler
                         }
                         break;
                     default:
-                        coreCompiler.AddCodeFile(op);
-                        count++;
+                        if (File.Exists(op))
+                        {
+                            coreCompiler.AddCodeFile(op);
+                            count++;
+                        }
+                        else
+                        {
+                            Console.WriteLine(Language.GetString("General", "File.NotExist", "The file \"{0}\" is not exist."),op);
+                        }
                         break;
                 }
             }

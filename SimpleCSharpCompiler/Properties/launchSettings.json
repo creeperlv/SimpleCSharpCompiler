@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "scsc": {
+      "commandName": "Project",
+      "commandLineArgs": "-V"
+    }
+  }
+}
