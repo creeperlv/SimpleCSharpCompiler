@@ -8,6 +8,9 @@
     <None Update="NetStandardLib\netstandard_2.0.0.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="NetStandardLib\netstandard_2.0.3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
