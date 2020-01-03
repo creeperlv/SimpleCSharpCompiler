@@ -86,6 +86,28 @@ namespace SimpleCSharpCompiler
                             }
                         }
                         break;
+                    case "-NETSTD":
+                        {
+                            string f = args[i + 1];
+                            i++;
+                            switch (f.ToUpper())
+                            {
+                                case "2.0.0":
+                                    {
+                                        coreCompiler.SetNetStandardVersion( NetStandardVersion.V2_0_0);
+                                    }
+                                    break;
+                                case "2.0.3":
+                                    {
+                                        coreCompiler.SetNetStandardVersion(NetStandardVersion.V2_0_3);
+                                    }
+                                    break;
+                                default:
+                                    Console.WriteLine(Language.GetString("General", "Unknown.NetSTDVersion", "Unknown .Net Standard Version."));
+                                    break;
+                            }
+                        }
+                        break;
                     case "-M":
                         {
                             string f = args[i + 1];
@@ -161,6 +183,9 @@ namespace SimpleCSharpCompiler
                             }else if (f.ToUpper() == "EXE")
                             {
                                 coreCompiler.SetTargetType(TargetType.EXE);
+                            }else if (f.ToUpper() == "NETSTANDARD")
+                            {
+                                coreCompiler.SetTargetType(TargetType.NETSTANDARD);
                             }
                         }
                         break;

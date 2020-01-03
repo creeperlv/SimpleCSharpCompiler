@@ -6,3 +6,4 @@ ResSrcFile=正在解析源文件……
 Unknown.Platform=未知平台。
 Unknown.LanguageVersion=未知语言版本。
 File.NotExist=文件“{0}”不存在。
+Unknown.NetSTDVersion=未知.Net Standard版本。

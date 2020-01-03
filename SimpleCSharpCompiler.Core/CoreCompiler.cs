@@ -12,7 +12,11 @@ namespace SimpleCSharpCompiler.Core
 {
     public enum TargetType
     {
-        DLL, EXE
+        DLL, EXE,NETSTANDARD
+    }
+    public enum NetStandardVersion
+    {
+        V2_0_0,V2_0_3
     }
     public class CoreCompiler
     {
@@ -25,22 +29,11 @@ namespace SimpleCSharpCompiler.Core
         LanguageVersion LanguageVersion = LanguageVersion.Default;
         bool CopyLibs = true;
         OptimizationLevel optimizationLevel = OptimizationLevel.Debug;
+        NetStandardVersion NetStandardVersion = NetStandardVersion.V2_0_3;
         public CoreCompiler()
         {
+
             TargetFile = "./" + TargetName;
-            var dir = (new FileInfo(typeof(object).Assembly.Location).Directory);
-            foreach (var item in dir.EnumerateFiles("*.dll"))
-            {
-                PreDLLRefs.Add(item);
-                if (item.Name == "System.Runtime.dll")
-                {
-                    DLLRefs.Add(item.FullName);
-                }
-                //else if (item.Name == "System.Private.CoreLib.dll")
-                //{
-                //    DLLRefs.Add(item.FullName);
-                //}
-            }
         }
         TargetType TargetType = TargetType.DLL;
         List<string> files = new List<string>();
@@ -190,12 +183,60 @@ namespace SimpleCSharpCompiler.Core
             DLLRefs.Add(s);
             return this;
         }
+        public CoreCompiler SetNetStandardVersion(NetStandardVersion netStandardVersion)
+        {
+            NetStandardVersion = netStandardVersion;
+            return this;
+        }
         public bool Compile()
         {
             List<MetadataReference> _ref = new List<MetadataReference>();
+            if(TargetType== TargetType.NETSTANDARD)
+            {
+                FileInfo fileInfo = new FileInfo(Assembly.GetAssembly(typeof(CoreCompiler)).Location);
+                var dire = fileInfo.Directory;
+                var str = "netstandard_";
+                switch (NetStandardVersion)
+                {
+                    case NetStandardVersion.V2_0_0:
+                        str += "2.0.0.dll";
+                        break;
+                    case NetStandardVersion.V2_0_3:
+                        str += "2.0.3.dll";
+                        break;
+                    default:
+                        break;
+                }
+                PreDLLRefs.Add(new FileInfo(Path.Combine(dire.FullName, "NetStandardLib", str)));
+                DLLRefs.Add(Path.Combine(dire.FullName, "NetStandardLib", str));
+            }
+            else
+            {
+
+                var dir = (new FileInfo(typeof(object).Assembly.Location).Directory);
+                foreach (var item in dir.EnumerateFiles("*.dll"))
+                {
+                    PreDLLRefs.Add(item);
+                    if (item.Name == "System.Runtime.dll")
+                    {
+                        DLLRefs.Add(item.FullName);
+                    }
+                    //else if (item.Name == "System.Private.CoreLib.dll")
+                    //{
+                    //    DLLRefs.Add(item.FullName);
+                    //}
+                }
+            {
+                _ref.Add(MetadataReference.CreateFromFile(typeof(object).Assembly.Location));
+                _ref.Add(MetadataReference.CreateFromFile(typeof(Console).Assembly.Location));
+                _ref.Add(MetadataReference.CreateFromFile(typeof(string).Assembly.Location));
+                _ref.Add(MetadataReference.CreateFromFile(typeof(System.Collections.IEnumerable).Assembly.Location));
+                _ref.Add(MetadataReference.CreateFromFile(typeof(File).Assembly.Location));
+            }
+            }
             //SourceFileResolver sourceFileResolver=new SourceFileResolver()
             var c = CSharpCompilation.Create(TargetName).WithOptions(new CSharpCompilationOptions(
-                  TargetType == TargetType.DLL ? OutputKind.DynamicallyLinkedLibrary : OutputKind.ConsoleApplication,
+                  TargetType != TargetType.EXE ? OutputKind.DynamicallyLinkedLibrary : OutputKind.ConsoleApplication,
                   optimizationLevel: optimizationLevel,
                   allowUnsafe: AllowUnsafe,
                   platform: Platform,
@@ -236,13 +277,6 @@ namespace SimpleCSharpCompiler.Core
                         //DLLRefs.Add(dlls.FullName);
                     }
                 }
-            }
-            {
-                _ref.Add(MetadataReference.CreateFromFile(typeof(object).Assembly.Location));
-                _ref.Add(MetadataReference.CreateFromFile(typeof(Console).Assembly.Location));
-                _ref.Add(MetadataReference.CreateFromFile(typeof(string).Assembly.Location));
-                _ref.Add(MetadataReference.CreateFromFile(typeof(System.Collections.IEnumerable).Assembly.Location));
-                _ref.Add(MetadataReference.CreateFromFile(typeof(File).Assembly.Location));
             }
             foreach (var item in DLLRefs)
             {
