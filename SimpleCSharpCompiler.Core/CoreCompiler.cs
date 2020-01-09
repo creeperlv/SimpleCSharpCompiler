@@ -340,8 +340,8 @@ namespace SimpleCSharpCompiler.Core
 
                                 var HostFile = new FileInfo(Path.Combine(di.FullName, "PreBuilt", "Host.Win32.x64.exe"));
                                 HostFile.CopyTo(TargetFile, true);
-                            }
-                            if(Platform== Platform.X64)
+                            }else
+                            if(Platform== Platform.X86)
                             {
 
                                 var HostFile = new FileInfo(Path.Combine(di.FullName, "PreBuilt", "Host.Win32.x86.exe"));
