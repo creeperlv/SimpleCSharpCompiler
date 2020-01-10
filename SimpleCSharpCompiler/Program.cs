@@ -36,6 +36,7 @@ namespace SimpleCSharpCompiler
                 string op = args[i];
                 switch (op.ToUpper())
                 {
+                    case "--OUTPUT":
                     case "-O":
                         {
                             string f = args[i + 1];
@@ -46,6 +47,7 @@ namespace SimpleCSharpCompiler
                             coreCompiler.SetTargetFile(file.FullName);
                         }
                         break;
+                    case "--FOLDER":
                     case "-F":
                         {
                             //Specify Folder
@@ -64,6 +66,7 @@ namespace SimpleCSharpCompiler
                             }
                         }
                         break;
+                    case "--OPTIMIZATION":
                     case "-OPT":
                         {
                             string f = args[i + 1];
@@ -86,6 +89,7 @@ namespace SimpleCSharpCompiler
                             }
                         }
                         break;
+                    case "--NETSTANDARD":
                     case "-NETSTD":
                         {
                             string f = args[i + 1];
@@ -108,6 +112,7 @@ namespace SimpleCSharpCompiler
                             }
                         }
                         break;
+                    case "--MAIN-CLASS":
                     case "-M":
                         {
                             string f = args[i + 1];
@@ -116,19 +121,14 @@ namespace SimpleCSharpCompiler
                         }
                         break;
                     case "--LANGUAGE-VERSION":
-                        {
-                            string f = args[i + 1];
-                            i++;
-                            coreCompiler.SetLanguageVersion(f);
-                        }
-                        break;
                     case "-L-V":
                         {
                             string f = args[i + 1];
                             i++;
                             coreCompiler.SetLanguageVersion(f);
                         }
-                        break;;
+                        break;
+                    case "--PLATFORM":
                     case "-P":
                         {
                             string f = args[i + 1];
@@ -136,6 +136,7 @@ namespace SimpleCSharpCompiler
                             coreCompiler.SetPlatform(f);
                         }
                         break;
+                    case "--COPY-LIBS":
                     case "-CL":
                         {
                             string f = args[i + 1];
@@ -190,6 +191,7 @@ namespace SimpleCSharpCompiler
                         }
                         break;
                     case "-V":
+                    case "--VERSION":
                         {
                             ShowVersion = true;
                             Console.WriteLine("scsc:"+version.ToString());
@@ -219,7 +221,7 @@ namespace SimpleCSharpCompiler
                 Console.WriteLine(Language.GetString("General", "NoInputFiles", "no input files"));
                 Console.WriteLine(Language.GetString("General", "Com.Ter", "compilation terminated."));
                 return;
-            }
+            }else
             Console.WriteLine(coreCompiler.Compile());
         }
     }
