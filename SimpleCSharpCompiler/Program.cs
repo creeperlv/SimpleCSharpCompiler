@@ -8,7 +8,7 @@ namespace SimpleCSharpCompiler
 {
     class Program
     {
-        static readonly Version version = new Version(1, 0, 1, 0);
+        static readonly Version version = new Version(1, 0, 2, 0);
 
         static CoreCompiler coreCompiler;
         public static void SearchSourceCode(DirectoryInfo rootDir,ref int count)
